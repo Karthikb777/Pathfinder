@@ -3,14 +3,16 @@ let path = []
 export function solveDijkstras(grid, start, end) {
     // needs a priority queue, use a sorted array to imitate a priority queue
     const nodes = []
+    for (const row of grid) {
+      for (const node of row) {
+          node.distance = Infinity
+            nodes.push(node)
+      }
+    }
+
     start.distance = 0
     start.prev = null
 
-    for (const row of grid) {
-      for (const node of row) {
-        nodes.push(node);
-      }
-    }
 
     while(!!nodes.length) {
         sortByDistance(nodes)
@@ -27,14 +29,13 @@ export function solveDijkstras(grid, start, end) {
         if(n === end) return path
         updateUnvisitedNeighbors(n, grid)
     }
-
 }
 
 // we update the distance of every visited neighbors and set the previous nde of the visited neighbors
 function updateUnvisitedNeighbors(n, grid) {
     const neighbors = addUnvisitedNeighbors(n, grid)
     for (const neighbor of neighbors) {
-        neighbor.distance = n.distance + 1
+        neighbor.distance = n.distance + neighbor.weight
         neighbor.prev = n
     }
 }
@@ -53,7 +54,7 @@ function addUnvisitedNeighbors(node, grid) {
     if(col > 0) neighbors.push(grid[row][col - 1])
     if(row < grid.length - 1) neighbors.push(grid[row + 1][col])
     if(col < grid[0].length - 1) neighbors.push(grid[row][col + 1])
-
+//  return only the nodes that are unvisited
     return neighbors.filter(neighbor => !neighbor.isVisited)
 }
 
@@ -63,7 +64,7 @@ export function getShortestPath(end) {
     let curr = end
     while(curr !== null) {
         // if there is no path between start and end node
-        if(curr == undefined) return shortestPath
+        if(curr === undefined) return shortestPath
         shortestPath.unshift(curr)
         curr = curr.prev
     }
