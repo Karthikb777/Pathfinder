@@ -1,4 +1,4 @@
-# KIT hub
+# Pathfinder
 
 Pathfinding algorithm visualizer built with ReactJS.
 
