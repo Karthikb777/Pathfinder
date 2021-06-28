@@ -129,12 +129,30 @@ const Grid = () => {
  
     const handleKeyDown = (event) => {
         if(algo === 'Dijkstra\'s') {
-            if(event.key === 'w') setIsKeyDown(true)
+            if(event.shiftKey) setIsKeyDown(true)
         }
     }
 
     const resetGrid = () => {
+        // let newGrid = Nodes.slice()
         window.location.reload()
+        // for(let i = 0; i < NUM_ROWS; i++) {
+        //     for(let j = 0; j< NUM_COLS; j++) {
+        //     newGrid[i][j].isStartNode = i === DEFAULT_START_ROW && j === DEFAULT_START_COL
+        //     newGrid[i][j].isEndNode = i === DEFAULT_END_ROW && j === DEFAULT_END_COL
+        //     newGrid[i][j].isWall = false
+        //     newGrid[i][j].isVisited = false
+        //     newGrid[i][j].hasMoreWeight = false
+        //     newGrid[i][j].weight = 1
+        //     newGrid[i][j].distance = Infinity
+        //     newGrid[i][j].prev = null
+        //     nodeRefs.current[i][j].className = 'node'
+        //     if(newGrid[i][j].isStartNode) setStart(newGrid[i][j])
+        //     if(newGrid[i][j].isEndNode) setEnd(newGrid[i][j])
+        //     }
+        // }
+        // setNodes(newGrid)
+        
     }
 
     const toggleStartEndNode = (node, choice) => {
@@ -221,6 +239,8 @@ const Grid = () => {
 
     const visualize = () => {
         let solved, shortestPath
+        solved = null
+        shortestPath = null
         switch (algo) {
             case 'Dijkstra\'s':
                 solved = solveDijkstras(Nodes, start, end)
@@ -273,7 +293,7 @@ const Grid = () => {
     const algoInfo = () => {
         switch (algo) {
             case 'Dijkstra\'s':
-                return <p>Dijkstra's algorithm is <b>weighted</b> and guarantees a shortest path!<br/><p className="hint">Hint: Hold 'w' while drawing walls to add weights.</p></p>
+                return <p>Dijkstra's algorithm is <b>weighted</b> and guarantees a shortest path!<br/><p className="hint">Hint: Hold shift key while drawing walls to add weights.</p></p>
             case 'BFS':
                 return <p>Breadth First Search algorithm is <b>unweighted</b> and guarantees a shortest path!</p>
             case 'DFS':
